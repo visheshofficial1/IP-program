@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vishesh Bhoyar — Developer Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10141b;
+    --panel:#171d27;
+    --panel-2:#1d2531;
+    --line:#2b3444;
+    --text:#e9ecf1;
+    --muted:#8b96a8;
+    --amber:#e8a33d;
+    --teal:#4fb8a8;
+    --radius:10px;
+    --maxw:1120px;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html{scroll-behavior:smooth; scroll-padding-top:80px;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Space Grotesk', system-ui, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  ::selection{ background:var(--amber); color:#10141b; }
+  :focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+
+  /* ---------- Navbar ---------- */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    padding-top:env(safe-area-inset-top,0px);
+    background:rgba(16,20,27,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-weight:700; font-size:1.05rem; letter-spacing:.2px;
+  }
+  .logo-mark{
+    width:32px; height:32px; border-radius:8px;
+    background:linear-gradient(135deg, var(--amber), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    color:#10141b; font-weight:700; font-size:.95rem;
+  }
+  nav.menu{ display:flex; gap:32px; }
+  nav.menu a{
+    color:var(--muted); font-size:.95rem; font-weight:500;
+    padding:6px 2px; border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.menu a:hover, nav.menu a:focus-visible{ color:var(--text); border-color:var(--amber); }
+  .nav-right{ display:flex; align-items:center; gap:18px; }
+
+  .profile-wrap{ position:relative; }
+  .profile-btn{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--panel-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--text); font-size:0.85rem; font-weight:600;
+  }
+  .profile-btn:hover{ border-color:var(--amber); }
+  .profile-menu{
+    position:absolute; right:0; top:48px;
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); min-width:190px;
+    padding:8px; display:none; flex-direction:column; gap:2px;
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+  }
+  .profile-menu.open{ display:flex; }
+  .profile-menu a{
+    padding:9px 10px; border-radius:6px; font-size:.9rem; color:var(--muted);
+  }
+  .profile-menu a:hover{ background:var(--panel-2); color:var(--text); }
+
+  .nav-toggle{ display:none; background:none; border:none; color:var(--text); cursor:pointer; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:80px 0 96px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--teal); font-size:.85rem;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.2vw, 3.4rem);
+    line-height:1.12;
+    margin:14px 0 18px;
+    font-weight:700;
+  }
+  .hero h1 span{ color:var(--amber); }
+  .hero p.lede{
+    color:var(--muted); font-size:1.08rem; max-width:52ch; margin-bottom:32px;
+  }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; border-radius:8px; font-weight:600; font-size:.95rem;
+    cursor:pointer; border:1px solid transparent;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-primary{ background:var(--amber); color:#1a1305; }
+  .btn-primary:hover{ background:#f0ad4f; }
+  .btn-ghost{ border-color:var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); }
+
+  /* code window visual */
+  .code-window{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:12px; overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+  }
+  .code-titlebar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 14px; border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+  .code-titlebar span.name{
+    margin-left:8px; font-family:'JetBrains Mono', monospace; font-size:.8rem; color:var(--muted);
+  }
+  .code-body{
+    padding:22px 20px; font-family:'JetBrains Mono', monospace; font-size:.86rem;
+    color:#c7cede; overflow-x:auto;
+  }
+  .code-body .ln{ color:#4b5468; user-select:none; display:inline-block; width:22px; }
+  .tok-key{ color:#e8a33d; }
+  .tok-str{ color:#4fb8a8; }
+  .tok-fn{ color:#8ab4f8; }
+  .tok-com{ color:#5c6577; }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:88px 0; border-bottom:1px solid var(--line); }
+  .section-head{ margin-bottom:44px; max-width:60ch; }
+  .section-head .eyebrow{ display:block; margin-bottom:10px; }
+  .section-head h2{ font-size:clamp(1.6rem, 3vw, 2.1rem); font-weight:700; }
+  .section-head p{ color:var(--muted); margin-top:10px; }
+
+  /* ---------- Hobbies / Achievements / Training ---------- */
+  .triptych{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+  }
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px 24px;
+  }
+  .panel h3{
+    font-size:1.05rem; margin-bottom:6px; display:flex; align-items:center; gap:10px;
+  }
+  .panel .tag{
+    font-family:'JetBrains Mono', monospace; font-size:.72rem; color:var(--muted);
+    display:block; margin-bottom:14px;
+  }
+  .panel ul{ list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .panel li{ color:var(--muted); font-size:.92rem; padding-left:18px; position:relative; }
+  .panel li::before{
+    content:''; position:absolute; left:0; top:8px;
+    width:6px; height:6px; border-radius:50%;
+  }
+  .panel.hobbies li::before{ background:var(--amber); }
+  .panel.achieve li::before{ background:var(--teal); }
+  .panel.training li::before{ background:#8ab4f8; }
+  .panel li b{ color:var(--text); font-weight:600; }
+
+  /* ---------- Filter / search ---------- */
+  .filter-bar{
+    display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px; margin-bottom:28px;
+  }
+  .search-input{
+    flex:1 1 240px; background:var(--panel-2); border:1px solid var(--line);
+    color:var(--text); padding:11px 14px; border-radius:8px; font-size:.92rem;
+    font-family:inherit;
+  }
+  .search-input::placeholder{ color:var(--muted); }
+  .search-input:focus-visible{ outline:2px solid var(--amber); }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{
+    font-family:'JetBrains Mono', monospace; font-size:.78rem;
+    padding:8px 14px; border-radius:20px; border:1px solid var(--line);
+    color:var(--muted); cursor:pointer; background:transparent;
+  }
+  .chip.active, .chip:hover{ border-color:var(--amber); color:var(--amber); }
+
+  .lang-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:18px;
+  }
+  .lang-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px;
+  }
+  .lang-card h4{ font-size:1rem; margin-bottom:4px; }
+  .lang-card .level{
+    font-family:'JetBrains Mono', monospace; font-size:.72rem; color:var(--teal);
+    display:block; margin-bottom:10px;
+  }
+  .lang-card p{ color:var(--muted); font-size:.86rem; }
+  .bar-track{ height:5px; background:var(--panel-2); border-radius:4px; margin-top:14px; overflow:hidden; }
+  .bar-fill{ height:100%; background:linear-gradient(90deg, var(--amber), var(--teal)); }
+  .empty-state{ color:var(--muted); text-align:center; padding:40px 0; display:none; }
+  .empty-state.show{ display:block; }
+
+  /* ---------- Footer ---------- */
+  footer{ padding:56px 0 40px; }
+  .footer-grid{
+    display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:32px;
+    margin-bottom:36px;
+  }
+  footer h5{ font-size:.85rem; color:var(--text); margin-bottom:14px; }
+  footer p, footer li{ color:var(--muted); font-size:.9rem; }
+  footer ul{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+  footer ul a:hover{ color:var(--amber); }
+  .social-row{ display:flex; gap:12px; margin-top:14px; }
+  .social-row a{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:.8rem;
+  }
+  .social-row a:hover{ border-color:var(--teal); color:var(--teal); }
+  .footer-bottom{
+    border-top:1px solid var(--line); padding-top:22px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    color:var(--muted); font-size:.82rem;
+  }
+
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .triptych{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 680px){
+    nav.menu{
+      position:absolute; top:68px; left:0; right:0;
+      background:var(--panel); border-bottom:1px solid var(--line);
+      flex-direction:column; padding:14px 24px; gap:4px;
+      display:none;
+    }
+    nav.menu.open{ display:flex; }
+    nav.menu a{ padding:10px 0; border-bottom:none; }
+    .nav-toggle{ display:block; }
+    .footer-grid{ grid-template-columns:1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .btn{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap nav-row">
+    <a href="#home" class="logo">
+      <span class="logo-mark">VB</span>
+      Vishesh Bhoyar
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+
+    <nav class="menu" id="navMenu">
+      <a href="#home">Home</a>
+      <a href="#work">Menu</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="profile-wrap">
+        <button class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false" aria-label="Profile menu">VB</button>
+        <div class="profile-menu" id="profileMenu">
+          <a href="#about">View profile</a>
+          <a href="#work">My work</a>
+          <a href="#contact">Contact me</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 1. HERO -->
+  <section class="hero" id="home" style="border-bottom:1px solid var(--line);">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow mono">Software developer · open to work</span>
+        <h1>I build things that <span>run in production</span>, not just in demos.</h1>
+        <p class="lede">Hi, I'm Alex — a backend-leaning full-stack developer who likes clean APIs, readable code, and shipping small things often.</p>
+        <div class="cta-row">
+          <a href="#about" class="btn btn-primary">About Me</a>
+          <a href="#work" class="btn btn-ghost">See my training log</a>
+        </div>
+      </div>
+
+      <div class="code-window" aria-hidden="true">
+        <div class="code-titlebar">
+          <span class="dot" style="background:#e8595a"></span>
+          <span class="dot" style="background:#e8c33d"></span>
+          <span class="dot" style="background:#4fb87a"></span>
+          <span class="name">about_me.py</span>
+        </div>
+        <div class="code-body">
+<div><span class="ln">1</span><span class="tok-key">class</span> <span class="tok-fn">Developer</span>:</div>
+<div><span class="ln">2</span>&nbsp;&nbsp;<span class="tok-key">def</span> <span class="tok-fn">__init__</span>(self):</div>
+<div><span class="ln">3</span>&nbsp;&nbsp;&nbsp;&nbsp;self.name = <span class="tok-str">"Vishesh Bhoyar"</span></div>
+<div><span class="ln">4</span>&nbsp;&nbsp;&nbsp;&nbsp;self.role = <span class="tok-str">"Full-Stack Dev"</span></div>
+<div><span class="ln">5</span>&nbsp;&nbsp;&nbsp;&nbsp;self.stack = [<span class="tok-str">"Python"</span>, <span class="tok-str">"JS"</span>, <span class="tok-str">"Go"</span>]</div>
+<div><span class="ln">6</span></div>
+<div><span class="ln">7</span>&nbsp;&nbsp;<span class="tok-com"># always learning something new</span></div>
+<div><span class="ln">8</span>&nbsp;&nbsp;<span class="tok-key">def</span> <span class="tok-fn">is_available</span>(self):</div>
+<div><span class="ln">9</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-key">return</span> <span class="tok-key">True</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Hobbies / Achievements / Training -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow mono">// about</span>
+        <h2>Outside the editor, and inside it</h2>
+        <p>A quick look at what I do for fun, what I've shipped, and what I'm currently training on.</p>
+      </div>
+
+      <div class="triptych">
+        <div class="panel hobbies">
+          <h3>Hobbies</h3>
+          <span class="tag mono">what I do off-screen</span>
+          <ul>
+            <li><b>Chess</b> — rated 2002 online, 1570 FIDE — active in classical &amp; rapid events</li>
+            <li><b>Trail running</b> — training for a half-marathon</li>
+            <li><b>Mechanical keyboards</b> — currently building a split ergo board</li>
+            <li><b>Reading</b> — sci-fi and systems-design books</li>
+          </ul>
+        </div>
+
+        <div class="panel achieve">
+          <h3>Achievements</h3>
+          <span class="tag mono">milestones</span>
+          <ul>
+            <li><b>Shipped</b> a payments service handling 10k+ daily transactions</li>
+            <li><b>Won</b> 2nd place, regional hackathon 2025</li>
+            <li><b>Open source</b> — 400+ GitHub stars across personal projects</li>
+            <li><b>Mentored</b> 6 junior developers through a bootcamp program</li>
+          </ul>
+        </div>
+
+        <div class="panel training">
+          <h3>Training</h3>
+          <span class="tag mono">in progress</span>
+          <ul>
+            <li><b>Rust</b> — working through ownership & async patterns</li>
+            <li><b>System design</b> — distributed systems certificate, 70% done</li>
+            <li><b>Kubernetes</b> — CKA exam prep</li>
+            <li><b>Writing</b> — publishing weekly dev-log notes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Filter / search for languages & training -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow mono">// for recruiters & companies</span>
+        <h2>Languages I've learned and trained in</h2>
+        <p>Search or filter by category to see where my hands-on experience is strongest.</p>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" class="search-input" id="langSearch" placeholder="Search a language, e.g. Python, SQL…" aria-label="Search languages">
+        <div class="chip-row" id="chipRow">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="backend">Backend</button>
+          <button class="chip" data-filter="frontend">Frontend</button>
+          <button class="chip" data-filter="data">Data</button>
+          <button class="chip" data-filter="devops">DevOps</button>
+        </div>
+      </div>
+
+      <div class="lang-grid" id="langGrid"></div>
+      <p class="empty-state" id="emptyState">No languages match that search — try another term or filter.</p>
+    </div>
+  </section>
+</main>
+
+<!-- 5. Footer -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:14px;">
+          <span class="logo-mark">VB</span> Vishesh Bhoyar
+        </div>
+        <p style="max-width:36ch;">Full-stack developer building reliable, readable software — currently open to new roles and freelance work.</p>
+        <div class="social-row">
+          <a href="https://github.com/" aria-label="GitHub" target="_blank" rel="noopener">GH</a>
+          <a href="https://linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+          <a href="https://twitter.com/" aria-label="X / Twitter" target="_blank" rel="noopener">X</a>
+        </div>
+      </div>
+
+      <div>
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#work">Menu</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:hello@alexrivera.dev">hello@alexrivera.dev</a></li>
+          <li>+1 (555) 012-3456</li>
+          <li>Singapore, SG</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Vishesh Bhoyar. All rights reserved.</span>
+      <span class="mono">Built with HTML, CSS &amp; JS — no frameworks.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Mobile nav toggle ----
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  navToggle.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+
+  // ---- Profile dropdown ----
+  const profileBtn = document.getElementById('profileBtn');
+  const profileMenu = document.getElementById('profileMenu');
+  profileBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = profileMenu.classList.toggle('open');
+    profileBtn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', (e) => {
+    if (!profileMenu.contains(e.target) && e.target !== profileBtn) {
+      profileMenu.classList.remove('open');
+      profileBtn.setAttribute('aria-expanded', false);
+    }
+  });
+
+  // ---- Language data ----
+  const languages = [
+    { name: 'Python',     cat: 'backend',  level: 90, note: '5 yrs — APIs, automation, data pipelines' },
+    { name: 'JavaScript', cat: 'frontend', level: 85, note: '4 yrs — React, vanilla DOM, Node' },
+    { name: 'Go',         cat: 'backend',  level: 70, note: '2 yrs — microservices, CLI tools' },
+    { name: 'SQL',        cat: 'data',     level: 80, note: 'Postgres & MySQL, query optimization' },
+    { name: 'TypeScript', cat: 'frontend', level: 75, note: 'Typed React & Node projects' },
+    { name: 'Rust',       cat: 'backend',  level: 40, note: 'Currently training — ownership, async' },
+    { name: 'Docker',     cat: 'devops',   level: 85, note: 'Containerizing services, compose stacks' },
+    { name: 'Kubernetes', cat: 'devops',   level: 55, note: 'Studying for CKA certification' },
+    { name: 'Python (ML)',cat: 'data',     level: 60, note: 'pandas, scikit-learn, basic model training' },
+    { name: 'HTML/CSS',   cat: 'frontend', level: 95, note: 'Semantic markup, Grid & Flexbox layouts' },
+  ];
+
+  const grid = document.getElementById('langGrid');
+  const emptyState = document.getElementById('emptyState');
+  const searchInput = document.getElementById('langSearch');
+  const chips = document.querySelectorAll('.chip');
+  let activeFilter = 'all';
+
+  function renderLanguages() {
+    const query = searchInput.value.trim().toLowerCase();
+    const filtered = languages.filter(l => {
+      const matchesFilter = activeFilter === 'all' || l.cat === activeFilter;
+      const matchesSearch = l.name.toLowerCase().includes(query);
+      return matchesFilter && matchesSearch;
+    });
+
+    grid.innerHTML = filtered.map(l => `
+      <div class="lang-card">
+        <h4>${l.name}</h4>
+        <span class="level mono">${l.cat} · ${l.level}%</span>
+        <p>${l.note}</p>
+        <div class="bar-track"><div class="bar-fill" style="width:${l.level}%"></div></div>
+      </div>
+    `).join('');
+
+    emptyState.classList.toggle('show', filtered.length === 0);
+  }
+
+  searchInput.addEventListener('input', renderLanguages);
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilter = chip.dataset.filter;
+      renderLanguages();
+    });
+  });
+
+  renderLanguages();
+</script>
+
+</body>
+</html>
